@@ -1,96 +1,173 @@
 <div class="container pt-3">
   <div class="mt-2 p-1 bg-primary text-white rounded text-center">
-      <h1>ToDo App</h1>
-      <p>Advance Version With Filter </p>
-    </div>
-    <div class="row">
-      <div class="col-5 pt-2">
-          <input type="text" class="form-control" [(ngModel)]="taskObj.taskName" placeholder="Task Name">
-      </div>
+    <h1>ToDo-List Application</h1>
   </div>
   <div class="row">
-      <div class="col-12 pt-2">
-          <textarea class="form-control" rows="3" [(ngModel)]="taskObj.taskDescription" placeholder="Task Description"></textarea>
-      </div>
+    <div class="pt-2">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="taskObj.taskName"
+        placeholder="Task Name"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 pt-2">
+      <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="taskObj.taskDescription"
+        placeholder="Task Description"
+      ></textarea>
+    </div>
   </div>
   <div class="row pt-2">
-      <div class="col-2">
-          <input type="date" id="textDate" class="form-control" [(ngModel)]="taskObj.dueDate" placeholder="Due Date">
-
-      </div>
-      <div class="col-6">
-          <input type="text" placeholder="Enter Comma Seperated tags" [(ngModel)]="taskObj.tags" class="form-control">
-      </div>
-      <div class="col">
-        @if (taskObj.itemId == 0) {
-            <button class="btn btn-success" (click)="addNewTask()">Add Task</button>
-        } @else {
-            <button class="btn btn-warning" (click)="updateTask()">Update</button>
-        }
-        </div>
+    <div class="col-4">
+      <input
+        type="date"
+        id="textDate"
+        class="form-control"
+        [(ngModel)]="taskObj.dueDate"
+        placeholder="Due Date"
+      />
+    </div>
+    <div class="col-6">
+      <input
+        type="text"
+        placeholder="Enter Comma Seperated tags"
+        [(ngModel)]="taskObj.tags"
+        class="form-control"
+      />
+    </div>
+    <div class="col">
+      @if (taskObj.itemId == 0) {
+      <button class="btn btn-success" (click)="addNewTask()">Add Task</button>
+      } @else {
+      <button class="btn btn-warning" (click)="updateTask()">Update</button>
+      }
+    </div>
   </div>
-  <div class="row pt-4">
-      <div class="col ">
-          <button class="btn btn-primary btn-sm">Filter By Tags</button>
-          <button class="btn btn-secondary  btn-sm">Show All</button> 
-          <button class="btn btn-secondary  btn-sm">Show Completed</button> 
-      </div>
-  </div>
-  <div class="row pt-4">
-      <div class="col ">
-          <button class="btn btn-secondary  btn-sm">Tags Group</button>
-          <button class="btn btn-secondary  btn-sm">default</button>
-          <button class="btn btn-secondary  btn-sm">Hobby </button>
-          <button class="btn btn-success  btn-sm">Holiday</button>
-          <button class="btn btn-success text-light  btn-sm">Financial </button>
-          <button class="btn btn-secondary  btn-sm">Fun </button>
-          <button class="btn btn-success  btn-sm">Emergency </button>
-          <button class="btn btn-secondary  btn-sm text-light">Health </button>
-          <button class="btn btn-secondary  btn-sm">Work</button>
-          <button class="btn btn-secondary  btn-sm">Education</button>
-          <button class="btn btn-secondary  btn-sm">Social</button>
-          <button class="btn btn-secondary  btn-sm">Travel</button>
-
-      </div>
-  </div>
-  <div class="row pt-3">
-      <div class="col-12">
-          <table class="table table-bordered table-striped table-sm">
-              <thead>
-                  <tr>
-                      <th><strong>Index</strong></th>
-                      <th><strong>Task Name</strong></th>
-                      <th><strong>Due Date</strong></th>
-                      <th class="text-center"><strong>Tags</strong></th>
-                  </tr>
-              </thead>
-              <tbody>
-                @for (item of taskList; track 'itemId') {
-                    <tr>
-                        <td style="text-align: center;">{{$index+1}}</td>
-                        <td>
-                            <div class="row">
-                                <div class="col-1">
-                                    <input type="checkbox">
-                                </div>
-                                <div class="col-6">
-                                    {{item.taskName}}
-                                </div>
-                                <div class="col-4 text-end ">
-                                    <i class="fa fa-close text-secondary px-3 text-danger "></i>
-                                </div>
-                            </div>
-                        </td>
-                        <td>{{item.dueDate | date: 'dd-MMM-yyyy'}}</td>
-                        <td class="text-center">
-                            <button class="btn btn-warning btn-sm rounded-btn" (click)="onEdit(item)">Edit</button>
-                            <button class="btn btn-danger btn-sm rounded-btn" (click)="onDelete(item.itemId)">Delete</button>
-                        </td>
-                    </tr>
-                }
-              </tbody>
-          </table>
-      </div>
-
+  <div class="row pt-9">
+    <div class="col-12">
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th><strong>No.</strong></th>
+            <th><strong>Task Name</strong></th>
+            <th><strong>Description</strong></th>
+            <th><strong>Due Date</strong></th>
+            <th class="text-center"><strong>Option</strong></th>
+          </tr>
+        </thead>
+        <!-- <tbody>
+          @for (item of taskList; track 'itemId') {
+          <tr>
+            <td style="text-align: center">{{ $index + 1 }}</td>
+            <td>
+              <div class="row">
+                <div class="col-1">
+                  <input type="checkbox" />
+                </div>
+                <div class="col-6">
+                  {{ item.taskName }}
+                </div>
+              </div>
+            </td>
+            <td>
+                <div class="row">
+                  <div class="col-6">
+                    {{ item.taskDescription }}
+                  </div>
+                </div>
+              </td>
+            <td>{{ item.dueDate | date : "dd-MMM-yyyy" }}</td>
+            <td class="text-center">
+              <button
+                class="btn btn-warning btn-sm rounded-btn"
+                (click)="onEdit(item)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger btn-sm rounded-btn"
+                (click)="onDelete(item.itemId)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody> -->
+        <tbody>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td>
+                    <div class="row" id="name">
+                        <div class="col-1">
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-10">
+                            Example 1
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row" id="des">
+                        <div class="col-5">
+                            Des:1
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        9 Aug 2024
+                    </div>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-warning btn-sm rounded-btn">
+                        Edit
+                    </button>
+                    <button class="ml-2 btn btn-danger btn-sm rounded-btn">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td>
+                    <div class="row" id="name">
+                        <div class="col-1">
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-10">
+                            Example 2
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row" id="des">
+                        <div class="col-5">
+                            Des:2
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        9 Aug 2024
+                    </div>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-warning btn-sm rounded-btn">
+                        Edit
+                    </button>
+                    <button class="ml-2 btn btn-danger btn-sm rounded-btn">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
